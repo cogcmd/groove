@@ -1,17 +1,17 @@
 ---
 cog_bundle_version: 3
 name: groove
-description: "Groove helpdesk commands"
-version: "0.1.16"
+description: Groove helpdesk commands
+version: 0.1.17
 docker:
   image: cogcmd/groove
-  tag: "0.1.16"
+  tag: 0.1.17
 permissions:
-  - groove:agent
+- groove:agent
 commands:
   trigger:
-    executable: /home/bundle/cog-command
-    description: "Accept inbound ticket creation webhook events from GrooveHQ"
+    executable: "/home/bundle/cog-command"
+    description: Accept inbound ticket creation webhook events from GrooveHQ
     documentation: |
       groove:trigger - Accept inbound ticket creation webhook events from GrooveHQ
 
@@ -23,20 +23,20 @@ commands:
       Example:
         groove:trigger > chat://#support
     rules:
-      - "allow"
+    - allow
   ticket:
-    executable: /home/bundle/cog-command
-    description: "Show the content of a specific ticket"
+    executable: "/home/bundle/cog-command"
+    description: Show the content of a specific ticket
     documentation: |
       groove:ticket <number> - Show a specific Groove ticket
 
       Returns the details of a specific ticket and the 5 most recent messages
       within the ticket.
     rules:
-      - "when command is groove:ticket must have groove:agent"
+    - when command is groove:ticket must have groove:agent
   tickets:
-    executable: /home/bundle/cog-command
-    description: "Execute command via Amazon SSM"
+    executable: "/home/bundle/cog-command"
+    description: Execute command via Amazon SSM
     documentation: |
       groove:tickets - List Groove tickets
 
@@ -49,19 +49,20 @@ commands:
         [--from|-f <email>] - Filter ticket list by ticket creator
     options:
       state:
-        description: "only list tickets with this state (possible values: unread, opened, pending, closed, spam)"
+        description: 'only list tickets with this state (possible values: unread,
+          opened, pending, closed, spam)'
         type: string
         required: false
         short_flag: s
       assignee:
-        description: "only list tickets assigned to this user (email address)"
+        description: only list tickets assigned to this user (email address)
         type: string
         required: false
         short_flag: a
       from:
-        description: "only list tickets from this customer (email address)"
+        description: only list tickets from this customer (email address)
         type: string
         required: false
         short_flag: f
     rules:
-      - "when command is groove:tickets must have groove:agent"
+    - when command is groove:tickets must have groove:agent
