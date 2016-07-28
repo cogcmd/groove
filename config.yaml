@@ -2,10 +2,10 @@
 cog_bundle_version: 3
 name: groove
 description: Groove helpdesk commands
-version: 0.1.19
+version: 0.1.20
 docker:
   image: cogcmd/groove
-  tag: 0.1.19
+  tag: 0.1.20
 permissions:
 - groove:agent
 commands:
@@ -67,10 +67,11 @@ commands:
     rules:
     - when command is groove:tickets must have groove:agent
 templates:
-  slack:
-    table: |
+  table:
+    slack: |
       >>> ```{{{table}}}```
-    ticket: |
+  ticket:
+    slack: |
       >>>
       *From:* {{ticket.customer_name}}
       *Subject:* {{{ticket.title}}}
@@ -81,7 +82,8 @@ templates:
       >{{{slack_body}}}
 
       {{/messages}}
-    trigger: |
+  trigger:
+    slack: |
       >>> *New Ticket:* {{ticket.mailbox}}
 
       *From:* {{ticket.customer_name}}
