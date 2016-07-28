@@ -29,7 +29,7 @@ class CogCmd::Groove::Tickets < Cog::Command
 
     if table.rows == []
       message = assignee.nil? ? "" : "#{assignee} in "
-      response.content = "No tickets where found for #{message} states: #{states.join(", ")}"
+      response.content = "No tickets were found for #{message} states: #{states.join(", ")}"
     else
       response.template = 'table'
       response['tickets'] = results
