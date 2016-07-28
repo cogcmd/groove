@@ -2,31 +2,51 @@
 cog_bundle_version: 3
 name: groove
 description: "Groove helpdesk commands"
-version: "0.1.15"
+version: "0.1.16"
 docker:
   image: cogcmd/groove
-  tag: "0.1.15"
+  tag: "0.1.16"
 permissions:
   - groove:agent
 commands:
   trigger:
     executable: /home/bundle/cog-command
-    description: "Accept Webhook events from GrooveHQ"
+    description: "Accept inbound ticket creation webhook events from GrooveHQ"
+    documentation: |
+      groove:trigger - Accept inbound ticket creation webhook events from GrooveHQ
+
+      Accepts a webhook payload for a ticket creation event from GrooveHQ and
+      applies a simple template to it. Should be used as the first stage of a
+      pipeline in a Trigger. For example, the following pipeline would receive
+      a ticket event and announce the ticket to your #support channel.
+
+      Example:
+        groove:trigger > chat://#support
     rules:
       - "allow"
   ticket:
     executable: /home/bundle/cog-command
     description: "Show the content of a specific ticket"
+    documentation: |
+      groove:ticket <number> - Show a specific Groove ticket
+
+      Returns the details of a specific ticket and the 5 most recent messages
+      within the ticket.
     rules:
       - "when command is groove:ticket must have groove:agent"
   tickets:
     executable: /home/bundle/cog-command
     description: "Execute command via Amazon SSM"
     documentation: |
-      groove:list [--state|-s <state>] <mailbox> - List Groove tickets
+      groove:tickets - List Groove tickets
 
-      Lists tickets in Groove. By default, only lists tickets with a state
-      set to unread.
+      Lists tickets in a GrooveHQ account. If called with no options, it
+      will return all tickets that are in the unread or opened states.
+
+      Options:
+        [--state|-s <state>] - Filter ticket list by state
+        [--assignee|-a <email>] - Filter ticket list by assignee
+        [--from|-f <email>] - Filter ticket list by ticket creator
     options:
       state:
         description: "only list tickets with this state (possible values: unread, opened, pending, closed, spam)"
