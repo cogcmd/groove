@@ -1,0 +1,47 @@
+---
+cog_bundle_version: 3
+name: groove
+description: "Groove helpdesk commands"
+version: "0.1.15"
+docker:
+  image: cogcmd/groove
+  tag: "0.1.15"
+permissions:
+  - groove:agent
+commands:
+  trigger:
+    executable: /home/bundle/cog-command
+    description: "Accept Webhook events from GrooveHQ"
+    rules:
+      - "allow"
+  ticket:
+    executable: /home/bundle/cog-command
+    description: "Show the content of a specific ticket"
+    rules:
+      - "when command is groove:ticket must have groove:agent"
+  tickets:
+    executable: /home/bundle/cog-command
+    description: "Execute command via Amazon SSM"
+    documentation: |
+      groove:list [--state|-s <state>] <mailbox> - List Groove tickets
+
+      Lists tickets in Groove. By default, only lists tickets with a state
+      set to unread.
+    options:
+      state:
+        description: "only list tickets with this state (possible values: unread, opened, pending, closed, spam)"
+        type: string
+        required: false
+        short_flag: s
+      assignee:
+        description: "only list tickets assigned to this user (email address)"
+        type: string
+        required: false
+        short_flag: a
+      from:
+        description: "only list tickets from this customer (email address)"
+        type: string
+        required: false
+        short_flag: f
+    rules:
+      - "when command is groove:tickets must have groove:agent"

@@ -1,0 +1,10 @@
+>>>
+*Title:* {{{ticket.title}}}
+*Creator:* {{ticket.customer_name}}
+*Date:* {{ticket.created_at}}
+
+{{#messages}}
+> _*{{from}}*_
+>{{{slack_body}}}
+
+{{/messages}}
