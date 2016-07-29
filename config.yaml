@@ -2,10 +2,10 @@
 cog_bundle_version: 3
 name: groove
 description: Groove helpdesk commands
-version: 0.1.20
+version: 0.2.0
 docker:
   image: cogcmd/groove
-  tag: 0.1.20
+  tag: 0.2.0
 permissions:
 - groove:agent
 commands:
@@ -26,7 +26,7 @@ commands:
     - allow
   ticket:
     executable: "/home/bundle/cog-command"
-    description: Show the content of a specific ticket
+    description: Return details for an individual Groove ticket
     documentation: |
       groove:ticket <number> - Show a specific Groove ticket
 
@@ -36,7 +36,7 @@ commands:
     - when command is groove:ticket must have groove:agent
   tickets:
     executable: "/home/bundle/cog-command"
-    description: Execute command via Amazon SSM
+    description: Return a list of Groove tickets
     documentation: |
       groove:tickets - List Groove tickets
 
