@@ -1,8 +1,8 @@
 ---
-cog_bundle_version: 3
+cog_bundle_version: 4
 name: groove
 description: Groove helpdesk commands
-version: 0.2.0
+version: 0.2.1
 docker:
   image: cogcmd/groove
   tag: 0.2.0
@@ -68,26 +68,31 @@ commands:
     - when command is groove:tickets must have groove:agent
 templates:
   table:
-    slack: |
-      >>> ```{{{table}}}```
+    body: |
+      ~each var=$results as=result~
+      ```~$result.table~```
+      ~end~
   ticket:
-    slack: |
-      >>>
-      *From:* {{ticket.customer_name}}
-      *Subject:* {{{ticket.title}}}
-      *Date:* {{ticket.created_at}}
+    body: |
+      ~each var=$results as=result~
+      *From:* ~$result.ticket.customer_name~
+      *Subject:* ~$result.ticket.title~
+      *Date:* ~$result.ticket.created_at~
 
-      {{#messages}}
-      > _*{{from}}*_
-      >{{{slack_body}}}
-
-      {{/messages}}
+      ~if cond=$result.messages not_empty?~
+      ~each var=$result.messages as=message~
+      _*~$message.from~*_
+      ~$message.body~
+      ~end~
+      ~end~
   trigger:
-    slack: |
-      >>> *New Ticket:* {{ticket.mailbox}}
+    body: |
+      ~each var=$results as=result~
+      *New Ticket:* ~$result.ticket.mailbox~
 
-      *From:* {{ticket.customer_name}}
-      *Subject:* {{{ticket.title}}}
-      *Date:* {{ticket.created_at}}
+      *From:* ~$result.ticket.customer_name~
+      *Subject:* ~$result.ticket.title~
+      *Date:* ~$result.ticket.created_at~
 
-      {{{ticket.last_message_plain_text}}}
+      ~$result.ticket.last_message_plain_text~
+      ~end~

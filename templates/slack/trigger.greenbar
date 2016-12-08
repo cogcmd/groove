@@ -1,0 +1,9 @@
+~each var=$results as=result~
+*New Ticket:* ~$result.ticket.mailbox~
+
+*From:* ~$result.ticket.customer_name~
+*Subject:* ~$result.ticket.title~
+*Date:* ~$result.ticket.created_at~
+
+~$result.ticket.last_message_plain_text~
+~end~
