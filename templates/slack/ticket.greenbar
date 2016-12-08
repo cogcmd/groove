@@ -1,0 +1,11 @@
+~each var=$results as=result~
+*From:* ~$result.ticket.customer_name~
+*Subject:* ~$result.ticket.title~
+*Date:* ~$result.ticket.created_at~
+
+~if cond=$result.messages no_empty?~
+~each var=$result.messages as=message~
+_*~$message.from~*_
+~$message.body~
+~end~
+~end~
