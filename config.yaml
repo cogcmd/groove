@@ -2,10 +2,10 @@
 cog_bundle_version: 4
 name: groove
 description: Groove helpdesk commands
-version: 0.2.0
+version: 0.2.1
 docker:
   image: cogcmd/groove
-  tag: 0.2.1
+  tag: 0.2.0
 permissions:
 - groove:agent
 commands:
