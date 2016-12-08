@@ -48,13 +48,10 @@ class CogCmd::Groove::Ticket < Cog::Command
       author = rel_target(message, 'author')
       recipient = rel_target(message, 'recipient')
 
-      slack_body = CGI.unescapeHTML(message.plain_text_body.gsub(/(\A\s*)|(\s*\z)/, '').split("\n").join("\n>"))
-
       {
         to: recipient,
         from: author,
-        body: message.plain_text_body,
-        slack_body: slack_body
+        body: message.plain_text_body
       }
     end
   end
